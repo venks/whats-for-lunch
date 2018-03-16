@@ -19,6 +19,8 @@ framework:
     csrf_protection: ~
     validation: { enable_annotations: true }
     serializer: { enable_annotations: true }
+    templating:
+        engines: ['twig']
     default_locale: '%locale%'
     trusted_hosts: ~
     session:
@@ -65,3 +67,37 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
+
+fos_rest:
+    routing_loader:
+        default_format: json
+    view:
+        default_engine: twig
+        # force_redirects:
+        #     html: true
+        formats:
+            json: true
+            xml: true
+        templating_formats:
+            html: false
+        view_response_listener:
+            force: true
+        failed_validation: HTTP_BAD_REQUEST
+    exception:
+        # codes: ~
+        # enabled: true
+        # messages:
+        #     Symfony\Component\HttpKernel\Exception\BadRequestHttpException: true
+    param_fetcher_listener: true
+    body_listener: true
+    format_listener:
+        rules:
+            - priorities: [json, xml, html]
+            - fallback_format: json
+    service:
+        router: router
+        templating: templating
+        # serializer: serializer
+        view_handler: fos_rest.view_handler.default
+        # inflector: twa_compchest_util_inflector
+    disable_csrf_role: IS_AUTHENTICATED_ANONYMOUSLY
