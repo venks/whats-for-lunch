@@ -1,0 +1,4 @@
+mf_api_lunch:
+    type: rest
+    prefix: /v1/lunch
+    resource: AppBundle\Controller\LunchController
