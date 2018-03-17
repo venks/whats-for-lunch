@@ -33,3 +33,19 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+
+    fridge_service:
+       class: AppBundle\Service\FridgeService
+       arguments: ["@file_locator"]
+       public: true
+
+    recipe_data_file:
+       class: AppBundle\Service\RecipeDatasourceFile
+       arguments: ["@file_locator"]
+       public: true
+
+    recipe_service:
+       class: AppBundle\Service\RecipeService
+       arguments: ["@recipe_data_file"]
+       public: true
+
